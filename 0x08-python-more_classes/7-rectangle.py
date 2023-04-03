@@ -7,7 +7,12 @@ Module creates the Rectangle class
 class Rectangle:
     """
     Class Rectangle with validated private instance attributes width and height
+    Attributes:
+        number_of_instances: number of instances of Rectangle
+        print_symbol: symbol used for string representation
     """
+    number_of_instances = 0
+    print_symbol = "#"
 
     def __init__(self, width=0, height=0):
         """Instantiates width and height using property setter
@@ -17,6 +22,26 @@ class Rectangle:
         """
         self.width = width
         self.height = height
+        Rectangle.number_of_instances += 1
+
+    def __str__(self):
+        """Returns a string of Rectangle instance using #, empty string"""
+        if self.width == 0 or self.height == 0:
+            return ""
+        row = "{}".format(self.print_symbol) * self.width
+        rect = row
+        for i in range(self.height - 1):
+            rect += "\n" + row
+        return rect
+
+    def __repr__(self):
+        """Returns a string representation able to create new instance"""
+        return "Rectangle({:d}, {:d})".format(self.width, self.height)
+
+    def __del__(self):
+        """Prints 'Bye rectangle...' when instance is deleted"""
+        print('Bye rectangle...')
+        Rectangle.number_of_instances -= 1
 
     @property
     def width(self):
@@ -57,3 +82,13 @@ class Rectangle:
         if value < 0:
             raise ValueError("height must be >= 0")
         self.__height = value
+
+    def area(self):
+        """Returns the calculated area of Rectangle instance"""
+        return self.width * self.height
+
+    def perimeter(self):
+        """Returns the calculated perimeter of Rectangle instance"""
+        if self.height == 0 or self.width == 0:
+            return 0
+        return (self.width + self.height) * 2
