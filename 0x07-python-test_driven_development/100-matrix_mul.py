@@ -1,59 +1,64 @@
 #!/usr/bin/python3
 """
-This is the divide module.
-has a function to divide matrix
-Divide all elements of a matrix
+This is the matrix_mul module.
+This module supplies one function, matrix_mul().
 """
 
 
-def matrix_divided(matrix, div):
-    """matrix must be a list of lists of integers/floats
-    Returns a new matrix
+def matrix_mul(m_a, m_b):
     """
-    newmatrix = []
-    length = 0
+    Return a new matrix multiplied.
+    Args:
+        m_a (list): list of lists of integers or floats.
+        m_b (list): list of lists of integers or floats.
+    """
+    if type(m_a) is not list:
+        raise TypeError("m_a must be a list")
+    if type(m_b) is not list:
+        raise TypeError("m_b must be a list")
 
-    # Divides all elements of a matrix
-    if isinstance(div, int) is False and isinstance(div, float) is False:
-        raise TypeError('div must be a number')
-    # Matrix must be a list of integers or floats, TypeError
-    if type(matrix) is not list:
-        raise TypeError('matrix must be a matrix (list of lists) '
-                        'of integers/floats')
-    if not isinstance(matrix[0], list):
-        raise TypeError('matrix must be a matrix (list of lists) '
-                        'of integers/floats')
-    if not isinstance(matrix, list):
-        raise TypeError('matrix must be a matrix (list of lists) '
-                        'of integers/floats')
-    # matix has to exist, can't be less or equal to 0
-    if len(matrix[0]) <= 0:
-        raise TypeError('matrix must be a matrix (list of lists) '
-                        'of integers/floats')
-    # 1.let's create new matrix with newrow
-    for row in matrix:
-        newrow = []
-        # matrix must be a list
-        if type(row) is not list:
-            raise TypeError('matrix must be a matrix (list of lists) '
-                            'of integers/floats')
-        # 2. row is empty
-        if length is 0:
-            length = len(row)
-        # Each row must be the same size, TypeError
-        elif len(row) is not length:
-            raise TypeError('Each row of the matrix must have the same size')
-        # 3. each item has to be an integer or float
-        for item in row:
-            if type(item) is not int and type(item) is not float:
-                raise TypeError('matrix must be a matrix (list of lists) '
-                                'of integers/floats')
-            # 4. add content to the row
-            # elements will be divided by div and rounded with 2 decimal
-            # round() function returns a floating point number that is
-            # a rounded version of the specified number
-            # with the specified number of decimals
-            newrow.append(round(item / div, 2))
-        # add content to the matrix
-        newmatrix.append(newrow)
-    return newmatrix
+    for row_a in m_a:
+        if type(row_a) is not list:
+            raise TypeError("m_a must be a list of lists")
+    for row_b in m_b:
+        if type(row_b) is not list:
+            raise TypeError("m_b must be a list of lists")
+
+    if len(m_a) > 0:
+        for row_a in m_a:
+            if len(row_a) is 0:
+                raise ValueError("m_a can't be empty")
+    else:
+        raise ValueError("m_a can't be empty")
+    if len(m_b) > 0:
+        for row_b in m_b:
+            if len(row_b) is 0:
+                raise ValueError("m_b can't be empty")
+    else:
+        raise ValueError("m_b can't be empty")
+
+    for row_a in m_a:
+        for i in row_a:
+            if type(i) not in [int, float]:
+                raise TypeError("m_a should contain only integers or floats")
+    for row_b in m_b:
+        for i in row_b:
+            if type(i) not in [int, float]:
+                raise TypeError("m_b should contain only integers or floats")
+
+    row_a_len = 0
+    for row_a in m_a:
+        if len(row_a) is not row_a_len and row_a_len is not 0:
+            raise TypeError("each row of m_a must be of the same size")
+        row_a_len = len(row_a)
+    row_b_len = 0
+    for row_b in m_b:
+        if len(row_b) is not row_b_len and row_b_len is not 0:
+            raise TypeError("each row of m_b must be of the same size")
+        row_b_len = len(row_b)
+
+    if row_a_len is not len(m_b):
+        raise ValueError("m_a and m_b can't be multiplied")
+
+    return [[sum(a * b for a, b in zip(row_a, col_b))
+             for col_b in zip(*m_b)] for row_a in m_a]
