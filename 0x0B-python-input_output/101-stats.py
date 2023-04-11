@@ -1,57 +1,56 @@
 #!/usr/bin/python3
-"""Reads from standard input and computes metrics.
-After every ten lines or the input of a keyboard interruption (CTRL + C),
-prints the following statistics:
-    - Total file size up to that point.
-    - Count of read status codes up to that point.
-"""
-
-
-def print_stats(size, status_codes):
-    """Print accumulated metrics.
-    Args:
-        size (int): The accumulated read file size.
-        status_codes (dict): The accumulated count of status codes.
-    """
-    print("File size: {}".format(size))
-    for key in sorted(status_codes):
-        print("{}: {}".format(key, status_codes[key]))
-
-
-if __name__ == "__main__":
-    import sys
-
-    size = 0
-    status_codes = {}
-    valid_codes = ['200', '301', '400', '401', '403', '404', '405', '500']
-    count = 0
-
-    try:
-        for line in sys.stdin:
-            if count == 10:
-                print_stats(size, status_codes)
-                count = 1
+import sys
+#import pdb; pdb.set_trace()
+my_dict = {"200":0, "301":0, "400":0, "401":0, "403":0, "404":0, "405":0, "500":0}
+for line in sys.stdin:
+    a = line.split()
+    init_all()
+    while True:
+        while cont < 10:
+            my_size += int(a[9])
+            print("Temporal size: {:d} and a[8]: {:s}".format(my_size, a[8]))
+            if a[8] =="200":
+                dic("200") 
+            elif a[8] =="301":
+                lis[0] += 1
+            elif a[8] =="400":
+                lis[0] += 1
+                is400 += 1
+            elif a[8] =="401":
+                lis[0] += 1
+                is401 += 1
+            elif a[8] =="403":
+                lis[0] += 1
+                is403 += 1
+            elif a[8] =="404":
+                lis[0] += 1
+                is404 += 1
+            elif a[8] =="405":
+                lis[0] += 1
+                is405 += 15
+            elif a[8] =="500":
+                lis[0] += 1
+                is500 += 1
             else:
-                count += 1
-
-            line = line.split()
-
-            try:
-                size += int(line[-1])
-            except (IndexError, ValueError):
                 pass
+                cont += 1
 
-            try:
-                if line[-2] in valid_codes:
-                    if status_codes.get(line[-2], -1) == -1:
-                        status_codes[line[-2]] = 1
-                    else:
-                        status_codes[line[-2]] += 1
-            except IndexError:
-                pass
-
-        print_stats(size, status_codes)
-
-    except KeyboardInterrupt:
-        print_stats(size, status_codes)
-        raise
+        print("File size: {:s}".format(my_size))
+        if is200 is not 0:
+            print("200: {:d}".format(is200))
+        elif is301 is not 0:
+            print("301: {:d}".format(is301))
+        elif is400  is not 0:
+            print("400: {:d}".format(is400))
+        elif is401 is not 0:
+            print("401: {:d}".format(is401))
+        elif is403 is not 0:
+            print("403: {:d}".format(is403))
+        elif is404 is not 0:
+            print("404: {:d}".format(is404))
+        elif is405 is not 0:
+            print("405: {:d}".format(is405))
+        elif is500 is not 0:
+            print("500: {:d}".format(is500))
+        else:
+            init_all()
