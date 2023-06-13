@@ -2,4 +2,5 @@
 const Rectangle = class { 
   constructor() {
   }
-};
+}
+module.exports = Rectangle;
