@@ -1,9 +1,10 @@
 !/usr/bin/python3
 
 """
-    A script that lists all states from the database hbtn_0e_0_usa
-    starting with capital letter N
-    Username, password and database names are given as user args
+    This script takes in an argument and
+displays all values in the states
+where `name` matches the argument
+from the database `hbtn_0e_0_usa`.
 """
 
 
@@ -20,9 +21,9 @@ if __name__ == '__main__':
 
     cursor = db.cursor()
 
-    sql = """ SELECT * FROM states
+    sql = "SELECT * FROM states
           WHERE name LIKE BINARY '{}'
-          ORDER BY id ASC """.format(sys.argv[4])
+          ORDER BY id ASC ".format(sys.argv[4])
 
     cursor.execute(sql)
 
